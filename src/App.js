@@ -4,6 +4,7 @@ import MyTable from './Views/Table/Table';
 import Create from './Views/Create/Create'
 import Counter from './Views/Counter/Counter';
 import Details from  './Views/Details/details';
+import Edit from './Views/Edit/edit';
 import SCounter from './Views/SCounter/SCounter';
 import {
   BrowserRouter as Router,
@@ -18,11 +19,6 @@ import {
 } from 'reactstrap';
 
 export default function App() {
-    // const url = 'https://localhost:44318/file'
-  // let data = fetch(url)
-  // .then(res => res.json())
-  // .then(json => alert(json))
-
   return (
     <Router>
       <div>
@@ -44,6 +40,7 @@ export default function App() {
           <Route path="/state" component={SCounter} />
           <Route path="/counter" component={Counter} />
           <Route path={`/:id/details`} component={Details} />
+          <Route path={`/edit/:id`} component={Edit} />
           <Route path={"/add"} component={Create} />
           <Route path="/" component={MyTable} />
         </Switch>
@@ -51,28 +48,3 @@ export default function App() {
     </Router>
   );
 }
-
-
-// omponentWillMount(){
-//   fetch('/getcurrencylist',
-//   {
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Accept':'application/json'
-//       },
-//       method: "get",
-//       dataType: 'json',
-//   })
-//   .then((res) => res.json())
-//   .then((data) => {
-//     var currencyList = [];
-//     for(var i=0; i< data.length; i++){
-//       var currency = data[i];
-//       currencyList.push(currency);
-//     }
-//     console.log(currencyList);
-//     this.setState({currencyList})
-//     console.log(this.state.currencyList);
-//   })
-//   .catch(err => console.log(err))
-// }

@@ -18,8 +18,8 @@ export default function Details() {
 
     return (
         <div>
-            <Button tag={Link} to={"/"}>Back</Button>
-            <Button tag={Link} to={"/edit"}>Edit</Button>
+            <Button tag={Link} to={"/"}> Back </Button>
+            <Button tag={Link} to={`/edit/${id}`}> Edit </Button>
             <br/>
             <form>
                 <fieldset disabled>
@@ -27,6 +27,7 @@ export default function Details() {
                         Name:
                         <input type='text' id='name' name='name' value={animal.name || 'teste'}/>
                     </label>
+                    <br/>
                     <label>
                         Specie:
                         <input type='text' id='specie' name='specie'value={animal.specie || 'teste'}/>
