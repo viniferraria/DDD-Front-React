@@ -4,15 +4,14 @@ import { Button } from 'reactstrap';
 import { Zoo } from '../../Models/Zoo'
 
 export default function Create() {
+    // Hooks
     const [name, setName] = useState('');
     const [specie, setSpecie] = useState('');
 
     function handleSubmit(event) {
         let animal = new Zoo(name, specie);
-        console.log(JSON.stringify(animal));
         const url = "https://localhost:44318/zoo/add";
-        fetch(url,
-            {
+        fetch(url, {
                 method: "post",
                 headers: new Headers({'Content-Type': 'application/json'}),
                 body: JSON.stringify(animal)
@@ -27,6 +26,7 @@ export default function Create() {
     
     return (
         <div>
+            {/* tag == component em seguida os parâmetros do component */}
             <Button tag={Link} to={"/"}>Back</Button>
             <br/>
             <form onSubmit={handleSubmit} >

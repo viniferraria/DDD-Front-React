@@ -6,7 +6,7 @@ import Edit from '../Edit/edit';
 import './Table.css';
 
 
-export default function MyTable(props) {
+export default function MyTable() {
     const [data, setData] = useState(null);
 
     const tableRow = (obj) => {
@@ -15,8 +15,14 @@ export default function MyTable(props) {
             <td> {obj.name} </td>
             <td> {obj.specie} </td>
             
-            <Button tag={Link} to={`/${obj.id}/details`}> Details </Button>{' '}
-            <Button tag={Link} to={`/edit/${obj.id}/`}> Edit </Button>{' '}
+            <Button tag={Link} to={{
+                pathname:`/details/${obj.id}/`,
+                state: obj
+                }}> Details </Button>
+            <Button tag={Link} to={{
+                pathname: `/edit/${obj.id}/`,
+                state: obj
+                }}> Edit </Button>
             <Button color='danger' onClick={ () => {
                 let url = `https://localhost:44318/zoo/${obj.id}`;
                 fetch(url, {
@@ -29,13 +35,8 @@ export default function MyTable(props) {
         </tr>
     }
 
-    function bulkInsert() {
-        fetch("https://localhost:44318/zoo/read")
-        .then((res) => res.json())
-        .then(console.log('fetched'))
-        .catch(e => console.log(e))
-    }
     //ComponentDidMount - fetch
+    //ComponentDidUpdate
     useEffect(() => {
         const url = "https://localhost:44318/zoo";
         fetch(url, {
@@ -45,6 +46,7 @@ export default function MyTable(props) {
         .then((json) => setData(json))
         .catch(err => console.log(err))
     }, [data]);
+    //[data] == (prevState !== state)? setData : continue
 
     return (
         <div>
@@ -63,8 +65,31 @@ export default function MyTable(props) {
                     {data && data.map(obj => tableRow(obj))}
                 </tbody>
             </Table>
-            <Route path={`/:id/details`} component={Details} />
+            <Route path={`/details/:id`} component={Details} />
             <Route path={`/edit/:id`} component={Edit} />
         </div>
     )
 }
+
+
+
+function bulkInsert() {
+    fetch("https://localhost:44318/zoo/read")
+    .then((res) => res.json())
+    .then(console.log('fetched'))
+    .catch(e => console.log(e))
+}
+
+
+// function FadingRoute({ component: Component, ...rest }) {
+//     return (
+//       <Route
+//         {...rest}
+//         render={routeProps => (
+// //           <FadeIn>
+//             <Component {...routeProps} />
+// //           </FadeIn>
+//         )}
+//       />
+//     );
+//   }
