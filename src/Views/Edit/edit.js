@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import { Zoo } from '../../Models/Zoo'
 
-export default function Edit() {
-    const [name, setName] = useState('');
-    const [specie, setSpecie] = useState('');
+export default function Edit(props) {
+    const [name, setName] = useState(props.location.state.name);
+    const [specie, setSpecie] = useState(props.location.state.specie);
     let { id } = useParams();
     
     function handleSubmit(event) {
@@ -15,26 +15,13 @@ export default function Edit() {
                 method: "patch",
                 headers: new Headers({'Content-Type': 'application/json'}),
                 body: JSON.stringify(animal)
-            }).then(res => res.json())
+            })
+            .then(res => res.json())
             .then(json => {
                 console.log(json);
             });
         event.preventDefault();
     }
-
-    // useEffect(() => {
-        let url = `https://localhost:44318/zoo/${id}`;
-        fetch(url, {
-            method: 'get',
-        })
-        .then((res) => res.json())
-        .then((json) => {
-            setName(json.name);
-            setSpecie(json.specie);
-        })
-        .catch(err => console.log(err))
-    // }, [name, specie])
-
     
     return (
         <div>
