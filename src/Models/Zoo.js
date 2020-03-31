@@ -1,5 +1,6 @@
 class Zoo {
-    constructor(name, specie) {
+    constructor({id, name, specie}) {
+        this.id = id;
         this.name = name;
         this.specie = specie;
     }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button } from 'reactstrap';
-import { Zoo } from '../../Models/Zoo'
+import { Zoo } from '../../Models/Zoo';
 
 export default function Edit(props) {
     const [name, setName] = useState(props.location.state.name);
@@ -9,17 +9,16 @@ export default function Edit(props) {
     let { id } = useParams();
     
     function handleSubmit(event) {
-        let animal = new Zoo(name, specie);
+        const zooId = parseInt(id);
+        let animal = new Zoo({id: zooId, name: name, specie:  specie});
+        console.log(JSON.stringify(animal));
         const url = `https://localhost:44318/zoo/update/${id}`;
         fetch(url, {
-                method: "patch",
+                method: "put",
                 headers: new Headers({'Content-Type': 'application/json'}),
                 body: JSON.stringify(animal)
             })
-            .then(res => res.json())
-            .then(json => {
-                console.log(json);
-            });
+            .then(() => console.log('updated'));
         event.preventDefault();
     }
     

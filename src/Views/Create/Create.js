@@ -9,13 +9,15 @@ export default function Create() {
     const [specie, setSpecie] = useState('');
 
     function handleSubmit(event) {
-        let animal = new Zoo(name, specie);
+        let animal = new Zoo({name: name, specie: specie});
+        console.log(JSON.stringify(animal));
         const url = "https://localhost:44318/zoo/add";
         fetch(url, {
                 method: "post",
                 headers: new Headers({'Content-Type': 'application/json'}),
                 body: JSON.stringify(animal)
-            }).then(res => res.json())
+            })
+            .then(res => res.json())
             .then(json => {
                 console.log(json);
                 setName('');
