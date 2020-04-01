@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import { Zoo } from '../../Models/Zoo';
+import Flag from '../Alert/Flag';
 
 export default function Edit(props) {
     const [name, setName] = useState(props.location.state.name);
     const [specie, setSpecie] = useState(props.location.state.specie);
+    const [showAlert, setAlert] = useState({show: false, success: false, message: ''});
     let { id } = useParams();
     
     function handleSubmit(event) {
@@ -18,12 +20,24 @@ export default function Edit(props) {
                 headers: new Headers({'Content-Type': 'application/json'}),
                 body: JSON.stringify(animal)
             })
-            .then(() => console.log('updated'));
+            .then(() => {
+                setAlert({show: true, success: true, message: 'Updated'});
+                setTimeout(() => {
+                    setAlert({show: false});
+                }, 3000);
+            })
+            .catch(err => {
+                setAlert({show: true, success: false, message: `Error ${err}`});
+                setTimeout(() => {
+                    setAlert({show: false});
+                }, 3000);
+            })
         event.preventDefault();
     }
     
     return (
         <div>
+            { (showAlert && showAlert.show)? <Flag config={showAlert}/> : null }
             <Button tag={Link} to={"/"}>Back</Button>
             <br/>
             <form onSubmit={handleSubmit} >

@@ -46,7 +46,7 @@ export default function MyTable() {
         .then((json) => setData(json))
         .catch(err => console.log(err))
     }, [data]);
-    //[data] == (prevState !== state)? setData : continue
+    //só atualiza se o state mudar  ex: [data] --> (prevState !== state)? setData : continue
 
     return (
         <div>
