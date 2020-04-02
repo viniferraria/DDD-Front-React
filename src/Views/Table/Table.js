@@ -7,7 +7,7 @@ import './Table.css';
 
 
 export default function MyTable() {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
 
     const tableRow = (obj) => {
         return <tr>
@@ -35,9 +35,35 @@ export default function MyTable() {
         </tr>
     }
 
+    const bulkInsert = () => {
+        fetch("https://localhost:44318/zoo/read")
+        .then((res) => res.json())
+        .then(console.log('fetched'))
+        .catch(e => console.log(e))
+    }
+   
+    // const bulkInsert = async () => {
+    //     try {
+    //         const res = await fetch("https://localhost:44318/zoo/read");
+    //         const json = await res.json;
+    //         console.log(await json);
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // }
+
+    // async function fetchUserData(id) {
+    //     const response = await fetch("/" + id);
+    //     setUser(await response.json());
+    //   }
+
+    //   useEffect(() => {
+    //     fetchUserData(props.id);
+    //   }, [props.id]);
+
+    useEffect(() => {
     //ComponentDidMount - fetch
     //ComponentDidUpdate
-    useEffect(() => {
         const url = "https://localhost:44318/zoo";
         fetch(url, {
             method: 'get',
@@ -71,16 +97,6 @@ export default function MyTable() {
     )
 }
 
-
-
-function bulkInsert() {
-    fetch("https://localhost:44318/zoo/read")
-    .then((res) => res.json())
-    .then(console.log('fetched'))
-    .catch(e => console.log(e))
-}
-
-
 // function FadingRoute({ component: Component, ...rest }) {
 //     return (
 //       <Route
@@ -93,3 +109,4 @@ function bulkInsert() {
 //       />
 //     );
 //   }
+
