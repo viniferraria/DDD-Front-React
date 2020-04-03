@@ -18,7 +18,7 @@ afterEach(() => {
   container = null;
 });
 
-it("renders user data", async () => {
+it("renders user data and correct href for buttons", async () => {
   const fakeList = [
     {
         "id": 1,
@@ -43,21 +43,19 @@ it("renders user data", async () => {
     render(
     <Router>
       <Table />
-    </Router>
-    , container);
+    </Router>, container);
   });
 
+  fakeList.forEach( ({ id, name, specie}) => {
+    expect(container.querySelector(`[data-testid="${id}"]`).textContent).toBe(id.toString());
+    expect(container.querySelector(`[data-testid="${name}"]`).textContent).toBe(name);
+    expect(container.querySelector(`[data-testid="${specie}"]`).textContent).toBe(specie);
+    expect(container.querySelector(`[data-testid="${id}-details-btn"]`).getAttribute("href")).toEqual(`/details/${id}/`);
+    expect(container.querySelector(`[data-testid="${id}-edit-btn"]`).getAttribute("href")).toEqual(`/edit/${id}/`);
+    // expect(container.querySelector(`[data-testid="${id}-delete-btn"]`).getAttribute("href")).toEqual(`/delete/${id}/`);
+  });
 
-  const tableData = container.querySelector("tbody");
-  // expect(container.querySelector("th").textContent).toBe(fakeList[0].id);
-  expect(container.querySelector("td").textContent).toBe(fakeList[0].name);
-  expect(container.querySelector("td").textContent).toBe(fakeList[0].name);
-  expect(container.querySelector("td").textContent).toBe(fakeList[0].specie);
-  // expect(container.querySelector("th").textContent).toBe(fakeList[1].id);
-  expect(container.querySelector("td").textContent).toBe(fakeList[1].name);
-  expect(container.querySelector("td").textContent).toBe(fakeList[1].specie);
-  
-
+  //   const firstRowColumns = rows.first().find('td').map(column => column.text())
   // remover o mock para garantir que os testes estão completamente isolados
   global.fetch.mockRestore();
 });

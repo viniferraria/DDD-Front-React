@@ -10,30 +10,28 @@ export default function Create() {
     const [specie, setSpecie] = useState('');
     const [showAlert, setAlert] = useState({show: false, success: false, message: ''});
 
-    function handleSubmit(event) {
-        let animal = new Zoo({name: name, specie: specie});
-        const url = "https://localhost:44318/zoo/add";
-        fetch(url, {
+    const createZoo = async() => {
+        try {
+            const res = await fetch("https://localhost:44318/zoo/add", {
                 method: "post",
                 headers: new Headers({'Content-Type': 'application/json'}),
                 body: JSON.stringify(animal)
-            })
-            .then(res => {
-                res.json()
-                setAlert({show: true, success: true, message: `Animal Created`})
-            })
-            .then(json => {
-                console.log(json);
-                setName('');
-                setSpecie('');
-                setTimeout(() => setAlert({show: false}), 3000);
-            })
-            .catch((err) => {
-                setAlert({show: true, success:false, message: `Error ${err}`});
-                setTimeout(() => {
-                    setAlert({show: false});
-                }, 3000);
             });
+            // const json = await res.json();
+            setAlert({show: true, success: true, message: `Animal Created`})
+            setName('');
+            setSpecie('');
+            setTimeout(() => setAlert({show: false}), 3000);
+        } catch(err) {
+            setAlert({show: true, success:false, message: `Error ${err}`});
+            setTimeout(() => {
+                setAlert({show: false});
+            }, 3000);
+        }
+    }
+
+    const handleSubmit = (event) => {
+        createZoo();
         event.preventDefault();
     }
     

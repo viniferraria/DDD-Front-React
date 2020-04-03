@@ -10,28 +10,30 @@ export default function Edit(props) {
     const [showAlert, setAlert] = useState({show: false, success: false, message: ''});
     let { id } = useParams();
     
-    function handleSubmit(event) {
-        const zooId = parseInt(id);
-        let animal = new Zoo({id: zooId, name: name, specie:  specie});
-        console.log(JSON.stringify(animal));
-        const url = `https://localhost:44318/zoo/update/${id}`;
-        fetch(url, {
+    const editZoo = async(animal) => {
+        try {
+            const res = await fetch(`https://localhost:44318/zoo/update/${animal.id}`, {
                 method: "put",
-                headers: new Headers({'Content-Type': 'application/json'}),
+                headers: new Headers({ 'Content-Type': 'application/json' }),
                 body: JSON.stringify(animal)
-            })
-            .then(() => {
-                setAlert({show: true, success: true, message: 'Updated'});
-                setTimeout(() => {
-                    setAlert({show: false});
-                }, 3000);
-            })
-            .catch(err => {
-                setAlert({show: true, success: false, message: `Error ${err}`});
-                setTimeout(() => {
-                    setAlert({show: false});
-                }, 3000);
-            })
+            });
+            setAlert({ show: true, success: true, message: 'Updated' });
+            setTimeout(() => {
+                setAlert({ show: false });
+            }, 3000);
+
+        } catch(err) {
+            setAlert({ show: true, success: false, message: `Error ${err}` });
+            setTimeout(() => {
+                setAlert({ show: false });
+            }, 3000);
+        };
+    }
+    
+    function handleSubmit(event) {
+        let animal = new Zoo({id: parseInt(id), name: name, specie:  specie});
+        console.log(JSON.stringify(animal));
+        editZoo(animal);
         event.preventDefault();
     }
     

@@ -8,9 +8,10 @@ export default function Details(props) {
     return (
         <div>
             <Button tag={Link} to={"/"}> Back </Button>
-            <Button tag={Link} to={{
-                pathname: `/edit/${id}/`,
-                state: props.location.state
+            <Button 
+                tag={Link} to={{
+                    pathname: `/edit/${id}/`,
+                    state: props.location.state
                 }}> Edit </Button>
             <br/>
             <form>

@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import MyTable from './Views/Table/Table';
+import Table from './Views/Table/Table';
 import Create from './Views/Create/Create'
 import Details from  './Views/Details/details';
 import Edit from './Views/Edit/edit';
@@ -18,7 +18,7 @@ export default function App() {
           <Route path={`/details/:id`} component={Details} />
           <Route path={`/edit/:id`} component={Edit} />
           <Route path={"/add"} component={Create} />
-          <Route path="/" component={MyTable} />
+          <Route path="/" component={Table} />
         </Switch>
       </div>
     </Router>
