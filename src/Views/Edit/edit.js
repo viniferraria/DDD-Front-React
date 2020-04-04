@@ -12,7 +12,7 @@ export default function Edit(props) {
     
     const editZoo = async(animal) => {
         try {
-            const res = await fetch(`https://localhost:44318/zoo/update/${animal.id}`, {
+            await fetch(`https://localhost:44318/zoo/update/${animal.id}`, {
                 method: "put",
                 headers: new Headers({ 'Content-Type': 'application/json' }),
                 body: JSON.stringify(animal)
@@ -39,7 +39,7 @@ export default function Edit(props) {
     
     return (
         <div>
-            { (showAlert && showAlert.show)? <Flag config={showAlert}/> : null }
+            { (showAlert && showAlert.show)? <Flag success={showAlert.success} message={showAlert.message} /> : null }
             <Button tag={Link} to={"/"}>Back</Button>
             <br/>
             <form onSubmit={handleSubmit} >

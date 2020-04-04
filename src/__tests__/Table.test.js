@@ -9,6 +9,9 @@ beforeEach(() => {
   // configurar o elemento do DOM como o alvo da renderização
   container = document.createElement("div");
   document.body.appendChild(container);
+  container = document.createElement("div");
+  // container *deve* ser anexado ao documento para que os eventos ocorram corretamente.
+  document.body.appendChild(container);
 });
 
 afterEach(() => {
@@ -19,6 +22,8 @@ afterEach(() => {
 });
 
 it("renders user data and correct href for buttons", async () => {
+
+  // arrange
   const fakeList = [
     {
         "id": 1,
@@ -37,7 +42,9 @@ it("renders user data and correct href for buttons", async () => {
       json: () => Promise.resolve(fakeList)
     })
   );
+  
 
+  // act
   // Usar a versão assíncrona de act para aplicar Promises resolvidas
   await act(async () => {
     render(
@@ -46,13 +53,22 @@ it("renders user data and correct href for buttons", async () => {
     </Router>, container);
   });
 
+  // assert
   fakeList.forEach( ({ id, name, specie}) => {
+    /* Id assert */
     expect(container.querySelector(`[data-testid="${id}"]`).textContent).toBe(id.toString());
+    /* Name assert */
     expect(container.querySelector(`[data-testid="${name}"]`).textContent).toBe(name);
+    /* Specie assert */
     expect(container.querySelector(`[data-testid="${specie}"]`).textContent).toBe(specie);
+    /* Details button href assert */
     expect(container.querySelector(`[data-testid="${id}-details-btn"]`).getAttribute("href")).toEqual(`/details/${id}/`);
+    /* Edit button href assert */
     expect(container.querySelector(`[data-testid="${id}-edit-btn"]`).getAttribute("href")).toEqual(`/edit/${id}/`);
-    // expect(container.querySelector(`[data-testid="${id}-delete-btn"]`).getAttribute("href")).toEqual(`/delete/${id}/`);
+    
+    /* Delete button action assert */
+    const deleteButton = container.querySelector(`[data-testid="${id}-delete-btn"]`);
+
   });
 
   //   const firstRowColumns = rows.first().find('td').map(column => column.text())

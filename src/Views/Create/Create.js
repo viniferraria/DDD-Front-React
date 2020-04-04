@@ -10,18 +10,18 @@ export default function Create() {
     const [specie, setSpecie] = useState('');
     const [showAlert, setAlert] = useState({show: false, success: false, message: ''});
 
-    const createZoo = async() => {
+    const createZoo = async(animal) => {
         try {
-            const res = await fetch("https://localhost:44318/zoo/add", {
+            await fetch("https://localhost:44318/zoo/add", {
                 method: "post",
                 headers: new Headers({'Content-Type': 'application/json'}),
                 body: JSON.stringify(animal)
             });
             // const json = await res.json();
             setAlert({show: true, success: true, message: `Animal Created`})
+            setTimeout(() => setAlert({show: false}), 3000);
             setName('');
             setSpecie('');
-            setTimeout(() => setAlert({show: false}), 3000);
         } catch(err) {
             setAlert({show: true, success:false, message: `Error ${err}`});
             setTimeout(() => {
@@ -31,13 +31,14 @@ export default function Create() {
     }
 
     const handleSubmit = (event) => {
-        createZoo();
+        let animal = new Zoo({name: name, specie: specie});
+        createZoo(animal);
         event.preventDefault();
     }
     
     return (
         <div>
-            { (showAlert && showAlert.show)? <Flag config={showAlert}/> : null }
+            { (showAlert && showAlert.show)? <Flag success={showAlert.success} message={showAlert.message} /> : null }
             {/* tag == component em seguida os parâmetros do componente */}
             <Button tag={Link} to={"/"}>Back</Button>
             <br/>

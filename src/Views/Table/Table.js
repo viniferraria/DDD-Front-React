@@ -10,15 +10,16 @@ export default function MyTable() {
     const [data, setData] = useState([]);
 
     const deleteById = async ({ id }) => {
-        try {
-            const res = await fetch(`https://localhost:44318/zoo/${id}`);
-            console.log(await res.json());
-        } catch (err) {
-            console.log(err);
-        }
+        console.log(id);
+        // try {
+        //     const res = await fetch(`https://localhost:44318/zoo/${id}`);
+        //     console.log(await res.json());
+        // } catch (err) {
+        //     console.log(err);
+        // }
     };
 
-    const tableRow = (obj) => {
+    const tableRow = ({ id, name, specie}) => {
         return <tr key={`row-${obj.id}`}>
             <th scope="row" data-testid={obj.id.toString()} key={obj.id.toString()}>{obj.id}</th>
             <td data-testid={obj.name} key={obj.name}>{obj.name}</td>
