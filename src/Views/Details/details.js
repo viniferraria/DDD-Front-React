@@ -18,11 +18,11 @@ export default function Details(props) {
                 <fieldset disabled>
                     <label>
                         Name:
-                        <input type='text' id='name' name='name' value={props.location.state.name || ''}/>
+                        <input data-testid={`details-name`} type='text' id='name' name='name' value={props.location.state.name || props.name}/>
                     </label>
                     <label>
                         Specie:
-                        <input type='text' id='specie' name='specie'value={props.location.state.specie || ''}/>
+                        <input data-testid={`details-specie`} type='text' id='specie' name='specie'value={props.location.state.specie || props.specie}/>
                     </label>
                 </fieldset>
             </form>

@@ -1,7 +1,7 @@
 import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-import Alert from "../Views/Alert/Flag";
+import Flag from "../Views/Alert/Flag";
 
 let container = null;
 beforeEach(() => {
@@ -25,7 +25,7 @@ it("renders success alert", () => {
 
   // act
   act(() => {
-    render(<Alert success={fakeSuccess.success} message={fakeSuccess.message}/>, container);
+    render(<Flag success={fakeSuccess.success} message={fakeSuccess.message}/>, container);
   });
   // assert
   expect(container.textContext).toBe(fakeSuccess.message);
@@ -35,11 +35,11 @@ it("renders success alert", () => {
 it("renders error alert", () => {
 
   // arrange
-  const fakeError = {success: true, message: 'Error'};
+  const fakeError = {success: false, message: 'Error'};
 
   // act
   act(() => {
-    render(<Alert success={fakeError.success} message={fakeError.message} />, container);
+    render(<Flag success={fakeError.success} message={fakeError.message} />, container);
   });
   // assert
   expect(container.textContext).toBe(fakeError.message);
