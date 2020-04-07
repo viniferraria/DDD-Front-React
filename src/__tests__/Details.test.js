@@ -1,12 +1,26 @@
 import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import { act } from "react-dom/test-utils";
 import Details from "../Views/Details/details";
 import { MemoryRouter, Route } from 'react-router-dom';
 import routeData from 'react-router';
 
-let container = null;
+// let container = null;
+// beforeEach(() => {
+//   // configurar o elemento do DOM como o alvo da renderização
+//     container = document.createElement("div");
+//     document.body.appendChild(container);
+//     container = document.createElement("div");
+//   // container *deve* ser anexado ao documento para que os eventos ocorram corretamente.
+//     document.body.appendChild(container);
+// });
 
+// afterEach(() => {
+//   // limpar na saída
+//     unmountComponentAtNode(container);
+//     container.remove();
+//     container = null;
+// });
 
 it("renders user data correctly", () => {
     
@@ -24,24 +38,17 @@ it("renders user data correctly", () => {
         state: mockedObj
     }
     
-    jest.spyOn(routeData, 'useLocation').mockReturnValue(mockLocation)
+    jest.spyOn(routeData, 'useLocation').mockReturnValue(mockLocation);
+    jest.spyOn(routeData, 'useHistory').mockReturnValue(console.log('hey '));
 
-//   jest.spyOn(global, "fetch").mockImplementation(() =>
-//     Promise.resolve({
-//       json: () => Promise.resolve(fakeList)
-//     })
-//   );
-  
+    // act
+    // Usar a versão assíncrona de act para aplicar Promises resolvidas
+    act(async () => {
+        render(
+            <Details name={mockedObj.name} specie={mockedObj.specie} />
+        , container);
+    });
 
-  // act
-  // Usar a versão assíncrona de act para aplicar Promises resolvidas
-  act(() => {
-    render(
-    <Details name={mockedObj.name} specie={mockedObj.specie}/>
-    , container);
-  });
-
-
-  expect(container.querySelector(`[data-testid="details-name"]`).textContent).toBe(mockedObj.name);
-
+    // assert
+    expect(container.querySelector(`[data-testid="details-name"]`).value).toBe(mockedObj.name);
 });

@@ -1,21 +1,23 @@
-import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
+import React from 'react';
+import { fireEvent, render, queryByDisplayValue} from '@testing-library/react';
 import Flag from "../Views/Alert/Flag";
+import { Alert } from 'reactstrap';
 
-let container = null;
-beforeEach(() => {
-  // configurar o elemento do DOM como o alvo da renderização
-  container = document.createElement("div");
-  document.body.appendChild(container);
-  container = document.createElement("div");
-});
 
-afterEach(() => {
-  // limpar na saída
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
+it("renders success alert", () => {
+
+  // arrange
+  const fakeSuccess = {success: true, message: 'Success'};
+
+  // act
+  const { queryAllByText } = render(
+    <Flag message={fakeSuccess.message} success={fakeSuccess.success} />
+  );
+  console.log(queryAllByText(fakeSuccess.message).textContext);
+
+  // assert
+  expect(queryAllByText(fakeSuccess.message)).toBeTruthy();
+
 });
 
 it("renders success alert", () => {
@@ -24,24 +26,9 @@ it("renders success alert", () => {
   const fakeSuccess = {success: true, message: 'Success'};
 
   // act
-  act(() => {
-    render(<Flag success={fakeSuccess.success} message={fakeSuccess.message}/>, container);
-  });
+  const { queryAllByText }= render(<Alert>hello</Alert>);
+
   // assert
-  expect(container.textContext).toBe(fakeSuccess.message);
-
-});
-
-it("renders error alert", () => {
-
-  // arrange
-  const fakeError = {success: false, message: 'Error'};
-
-  // act
-  act(() => {
-    render(<Flag success={fakeError.success} message={fakeError.message} />, container);
-  });
-  // assert
-  expect(container.textContext).toBe(fakeError.message);
+  expect(queryAllByText(fakeSuccess.message)).toBeTruthy();
 
 });
