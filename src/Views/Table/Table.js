@@ -81,8 +81,10 @@ export default function MyTable() {
                     {data && data.map(obj => tableRow(obj))}
                 </tbody>
             </Table>
-            <Route path={`/details/:id`} component={Details} />
-            <Route path={`/edit/:id`} component={Edit} />
+            <Switch>
+                <Route path={`/details/:id`} component={Details} />
+                <Route path={`/edit/:id`} component={Edit} />
+            </Switch>
         </div>
     )
 }

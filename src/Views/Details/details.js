@@ -1,13 +1,14 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 
 export default function Details(props) {
+    let history = useHistory();
     let { id } = useParams();
 
     return (
         <div>
-            <Button tag={Link} to={"/"}> Back </Button>
+            <Button onClick={() => history.push("/")}> Back </Button>
             <Button 
                 tag={Link} to={{
                     pathname: `/edit/${id}/`,

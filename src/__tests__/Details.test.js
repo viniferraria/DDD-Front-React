@@ -6,21 +6,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import routeData from 'react-router';
 
 let container = null;
-beforeEach(() => {
-    // configurar o elemento do DOM como o alvo da renderização
-    container = document.createElement("div");
-    document.body.appendChild(container);
-    container = document.createElement("div");
-    // container *deve* ser anexado ao documento para que os eventos ocorram corretamente.
-    document.body.appendChild(container);
-});
 
-afterEach(() => {
-  // limpar na saída
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
 
 it("renders user data correctly", () => {
     
@@ -39,7 +25,7 @@ it("renders user data correctly", () => {
     }
     
     jest.spyOn(routeData, 'useLocation').mockReturnValue(mockLocation)
-    
+
 //   jest.spyOn(global, "fetch").mockImplementation(() =>
 //     Promise.resolve({
 //       json: () => Promise.resolve(fakeList)
