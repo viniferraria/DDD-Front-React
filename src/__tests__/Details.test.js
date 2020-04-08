@@ -30,25 +30,31 @@ it("renders user data correctly", () => {
         "name": "Simba",
         "specie": "Lion"
     }
-    
-    const mockLocation = {
-        pathname: '/details/1',
-        hash: '',
-        search: '',
-        state: mockedObj
-    }
-    
+        
+        const mockLocation = {
+            pathname: '/details/1',
+            hash: '',
+            search: '',
+            state: mockedObj
+        }
+        
     jest.spyOn(routeData, 'useLocation').mockReturnValue(mockLocation);
     jest.spyOn(routeData, 'useHistory').mockReturnValue(console.log('hey '));
 
     // act
     // Usar a versão assíncrona de act para aplicar Promises resolvidas
-    act(async () => {
-        render(
-            <Details name={mockedObj.name} specie={mockedObj.specie} />
-        , container);
-    });
+
+    // act(async () => {
+    //     render(
+    //         <Details name={mockedObj.name} specie={mockedObj.specie} />
+    //     , container);
+    // });
+
+    const { queryByLabelText } = render(
+        <Details location={mockedObj} />
+    );
+    console.log(queryByLabelText(mockedObj.name));
 
     // assert
-    expect(container.querySelector(`[data-testid="details-name"]`).value).toBe(mockedObj.name);
+    expect(queryByLabelText(mockedObj.name)).toBeTruthy();
 });

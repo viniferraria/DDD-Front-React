@@ -20,15 +20,18 @@ it("renders success alert", () => {
 
 });
 
-it("renders success alert", () => {
+it("renders error alert", () => {
 
   // arrange
-  const fakeSuccess = {success: true, message: 'Success'};
+  const fakeError = {success: false, message: 'Error'};
 
   // act
-  const { queryAllByText }= render(<Alert>hello</Alert>);
+  const { queryAllByText } = render(
+    <Flag message={fakeError.message} success={fakeError.success} />
+  );
+  console.log(queryAllByText(fakeError.message).textContext);
 
   // assert
-  expect(queryAllByText(fakeSuccess.message)).toBeTruthy();
+  expect(queryAllByText(fakeError.message)).toBeTruthy();
 
 });
