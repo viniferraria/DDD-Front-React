@@ -1,56 +1,66 @@
-// import React from "react";
-// import { render, unmountComponentAtNode } from "react-dom";
-// import { act } from "react-dom/test-utils";
-// import Table from "../Views/Table/Table";
-// import { BrowserRouter as Router, Link } from 'react-router-dom';
+import React from 'react';
+import { render, fireEvent, cleanup } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom';
+import routeData from 'react-router';
+import Edit from "../Views/Edit/edit";
 
-// let container = null;
-// beforeEach(() => {
-//   // configurar o elemento do DOM como o alvo da renderização
-//   container = document.createElement("div");
-//   document.body.appendChild(container);
-//   container = document.createElement("div");
-//   // container *deve* ser anexado ao documento para que os eventos ocorram corretamente.
-//   document.body.appendChild(container);
-// });
+afterEach(cleanup);
 
-// afterEach(() => {
-//   // limpar na saída
-//   unmountComponentAtNode(container);
-//   container.remove();
-//   container = null;
-// });
 
-// it("renders user data and correct href for buttons", async () => {
+test('It should receive a name', () => {
+    //arrange
+    const mockedInput = { 
+        id: 1,
+        name: "Simba",
+        specie: "Lion"
+    };
 
-//   // arrange
-//   const fakeList = [
-//     {
-//         "id": 1,
-//         "name": "Simba",
-//         "specie": "Lion"
-//     },
-//     {
-//         "id": 2,
-//         "name": "Mufasa",
-//         "specie": "Lion"
-//     }
-//   ]
+    const url = `/edit/${mockedInput.id}}`;
 
-//   jest.spyOn(global, "fetch").mockImplementation(() =>
-//     Promise.resolve({
-//       json: () => Promise.resolve(fakeList)
-//     })
-//   );
+    const mockLocation = {
+        pathname: url,
+        hash: '',
+        search: '',
+        state: mockedInput
+    };
+
+    jest.spyOn(routeData, 'useHistory').mockReturnValue(mockedInput.id);
   
+    //act 
+    const { getByPlaceholderText, debug } = render(
+        <MemoryRouter initialEntries={[url]}>
+            <Edit location={mockLocation}/>
+        </MemoryRouter>
+    );
+        
+    debug();
+    // const name = getByPlaceholderText("name");
+    // fireEvent.change(name, { target: { value: mockedInput.name } });
+    
+    // //assert
+    // expect(name.value).toBe(mockedInput.name);
+});
+            
 
-//   // act
-//   // Usar a versão assíncrona de act para aplicar Promises resolvidas
-//   await act(async () => {
-//     render(
-//     <Router>
-//       <Table />
-//     </Router>, container);
-//   });
 
+
+// import * as React from "react";
+// import { render } from "@testing-library/react";
+// import { Router } from "react-router-dom";
+// import { createMemoryHistory } from "history";
+// import { App } from "./App";
+
+// it("renders location state", () => {
+//   const history = createMemoryHistory();
+//   const state = { a: 123, b: 456 }
+//   history.push("/", state);
+
+//   const { getByText } = render(
+//     <Router history={history}>
+//       <App />
+//     </Router>
+//   );
+
+//   getByText(state.a);
+//   getByText(state.b);
 // });

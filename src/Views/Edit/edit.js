@@ -47,11 +47,11 @@ export default function Edit(props) {
                 <fieldset>
                     <label>
                         Name:
-                        <input type='text' id='name' name='name' placeholder={'Name'} value={name} onChange={(e) => setName(e.target.value)} />
+                        <input type='text' id='name' name='name' placeholder='name' value={name} onChange={(e) => setName(e.target.value)} />
                     </label>
                     <label>
                         Specie:
-                        <input type='text' id='specie' name='specie' placeholder={'Specie'} value={specie} onChange={(e) => setSpecie(e.target.value)} />
+                        <input type='text' id='specie' name='specie' placeholder='specie' value={specie} onChange={(e) => setSpecie(e.target.value)} />
                     </label>
                     <Button type="submit">Save</Button>
                 </fieldset>

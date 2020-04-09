@@ -1,28 +1,13 @@
-import React from "react";
-import {cleanup, fireEvent, render} from '@testing-library/react';
-import { act } from "react-dom/test-utils";
-import Details from "../Views/Details/details";
-import { MemoryRouter, Route } from 'react-router-dom';
+import React  from "react";
+import { render, cleanup } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom';
 import routeData from 'react-router';
+import Details from "../Views/Details/details";
 
-// let container = null;
-// beforeEach(() => {
-//   // configurar o elemento do DOM como o alvo da renderização
-//     container = document.createElement("div");
-//     document.body.appendChild(container);
-//     container = document.createElement("div");
-//   // container *deve* ser anexado ao documento para que os eventos ocorram corretamente.
-//     document.body.appendChild(container);
-// });
 
-// afterEach(() => {
-//   // limpar na saída
-//     unmountComponentAtNode(container);
-//     container.remove();
-//     container = null;
-// });
+afterEach(cleanup);
 
-it("renders user data correctly", () => {
+it("receives and renders user data correctly", () => {
     
     // arrange
     const mockedObj = {
@@ -31,30 +16,27 @@ it("renders user data correctly", () => {
         "specie": "Lion"
     }
         
-        const mockLocation = {
-            pathname: '/details/1',
-            hash: '',
-            search: '',
-            state: mockedObj
-        }
+    const mockLocation = {
+        pathname: '/details/1',
+        hash: '',
+        search: '',
+        state: mockedObj
+    }
         
-    jest.spyOn(routeData, 'useLocation').mockReturnValue(mockLocation);
-    jest.spyOn(routeData, 'useHistory').mockReturnValue(console.log('hey '));
+    jest.spyOn(routeData, 'useHistory').mockReturnValue(mockedObj.id);
+    
 
-    // act
-    // Usar a versão assíncrona de act para aplicar Promises resolvidas
-
-    // act(async () => {
-    //     render(
-    //         <Details name={mockedObj.name} specie={mockedObj.specie} />
-    //     , container);
-    // });
-
-    const { queryByLabelText } = render(
-        <Details location={mockedObj} />
+    const { getByPlaceholderText, getByDisplayValue, debug } = render(
+        <MemoryRouter initialEntries={[`/details/${mockedObj.id}`]}>
+            <Details location={mockLocation}/>
+        </MemoryRouter>
     );
-    console.log(queryByLabelText(mockedObj.name));
+
+    const name = getByPlaceholderText(/Name/i);
+    const specie = getByPlaceholderText(/Specie/i);
 
     // assert
-    expect(queryByLabelText(mockedObj.name)).toBeTruthy();
+
+    expect(name.value).toBe(mockedObj.name);
+    expect(specie.value).toBe(mockedObj.specie);
 });

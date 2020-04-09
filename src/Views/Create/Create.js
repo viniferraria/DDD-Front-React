@@ -46,11 +46,11 @@ export default function Create() {
                 <fieldset>
                     <label>
                         Name:
-                        <input type='text' id='name' name='name' placeholder={'Name'} value={name} onChange={ e => setName(e.target.value)} />
+                        <input data-testid={"name-input"} type='text' id='name-input' name='name' placeholder={'Name'} value={name} onChange={ e => setName(e.target.value)} />
                     </label>
                     <label>
                         Specie:
-                        <input type='text' id='specie' name='specie' placeholder={'Specie'} value={specie} onChange={ e => setSpecie(e.target.value)} />
+                        <input data-testid="specie-input" type='text' id='specie' name='specie' placeholder={'Specie'} value={specie} onChange={ e => setSpecie(e.target.value)} />
                     </label>
                     <Button type="submit">Submit</Button>
                 </fieldset>
@@ -60,12 +60,12 @@ export default function Create() {
 }
 
 
-import React from 'react';
-import { render } from '@testing-library/react';
-import Experiment from '../Experiment';
+// import React from 'react';
+// import { render } from '@testing-library/react';
+// import Experiment from '../Experiment';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<Experiment />);
-  const linkElement = getByText(/Hey, stranger/i);
-  expect(linkElement).toBeInTheDocument();
-});
+// test('renders learn react link', () => {
+//   const { getByText } = render(<Experiment />);
+//   const linkElement = getByText(/Hey, stranger/i);
+//   expect(linkElement).toBeInTheDocument();
+// });
