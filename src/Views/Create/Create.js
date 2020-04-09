@@ -20,7 +20,7 @@ export default function Create() {
             });
             // const json = await res.json();
             setAlert({show: true, success: true, message: `Animal Created`})
-            setTimeout(() => setAlert({show: false}), 3000);
+  //          setTimeout(() => setAlert({show: false}), 3000);
             setName('');
             setSpecie('');
         } catch(err) {
