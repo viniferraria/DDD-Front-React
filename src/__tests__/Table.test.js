@@ -3,12 +3,11 @@ import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import Table from "../Views/Table/Table";
 import { BrowserRouter as Router } from 'react-router-dom';
+import * as deleteApi from '../Views/Table/tableApi';
 
 let container = null;
 beforeEach(() => {
   // configurar o elemento do DOM como o alvo da renderização
-  container = document.createElement("div");
-  document.body.appendChild(container);
   container = document.createElement("div");
   // container *deve* ser anexado ao documento para que os eventos ocorram corretamente.
   document.body.appendChild(container);
@@ -75,7 +74,7 @@ it("renders user data and correct href for buttons", async () => {
 
 it("should delete one object", async () => {
   // arrange
-  const fakeList = [
+  let fakeList = [
     {
         "id": 1,
         "name": "Simba",
@@ -94,9 +93,9 @@ it("should delete one object", async () => {
     })
   );  
   
-  jest.spyOn(Table, "deleteById").mockImplementation(() => {
-    let outterId = fakeList.length - 1;
-    fakeList = fakeList.filter((id) => id !== outterId );
+  jest.spyOn(deleteApi, "deleteById").mockImplementation(() => {
+    let outterId = fakeList.length;
+    fakeList = fakeList.filter(({id}) => id !== outterId );
   });
     
     // act
@@ -113,10 +112,10 @@ it("should delete one object", async () => {
   const deleteButton = container.querySelector(`[data-testid="${lastElem.id}-delete-btn"]`);
   
   act(() => {
-    deleteButton.dispatchEvent( new MouseEvent("click", {bubbles: true}));
-  })
-  expect('').toBeNull();
-
+      deleteButton.dispatchEvent( new MouseEvent("click", {bubbles: true}));
+  });
+  
+  expect(fakeList.length).toBe(1);
 })
 
 

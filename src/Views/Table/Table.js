@@ -1,34 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from'reactstrap';
 import { Link } from 'react-router-dom';
-import { fetchTableUrl, deleteUrl, bulkUrl} from '../../constants';
+import { fetchTableUrl, bulkUrl} from '../../constants';
+import { deleteById } from './tableApi';
 import './Table.css';
 
 
 export default function MyTable() {
     const [data, setData] = useState([]);
-        // {
-        //     "id": 1,
-        //     "name": "Simba",
-        //     "specie": "Lion"
-        // },
-        // {
-        //     "id": 2,
-        //     "name": "Mufasa",
-        //     "specie": "Lion"
-        // }
-
-    const deleteById = async ({ id: outterId }) => {
-        // setData(data.filter(({id}) => id !== outterId ));
-        try {
-            const res = await fetch(deleteUrl({ id }), {
-                method: 'delete'
-            });
-            console.log(await res.json());
-        } catch (err) {
-            console.log(err);
-        }
-    };
 
     const tableRow = (obj) => {
         return <tr key={`row-${obj.id}`}>
