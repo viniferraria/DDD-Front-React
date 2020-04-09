@@ -6,29 +6,28 @@ import './Table.css';
 
 
 export default function MyTable() {
-    const [data, setData] = useState([
-        {
-            "id": 1,
-            "name": "Simba",
-            "specie": "Lion"
-        },
-        {
-            "id": 2,
-            "name": "Mufasa",
-            "specie": "Lion"
-        }
-    ]);
+    const [data, setData] = useState([]);
+        // {
+        //     "id": 1,
+        //     "name": "Simba",
+        //     "specie": "Lion"
+        // },
+        // {
+        //     "id": 2,
+        //     "name": "Mufasa",
+        //     "specie": "Lion"
+        // }
 
     const deleteById = async ({ id: outterId }) => {
-        setData(data.filter(({id}) => id !== outterId ));
-        // try {
-        //     const res = await fetch(deleteUrl({ id }), {
-        //         method: 'delete'
-        //     });
-        //     console.log(await res.json());
-        // } catch (err) {
-        //     console.log(err);
-        // }
+        // setData(data.filter(({id}) => id !== outterId ));
+        try {
+            const res = await fetch(deleteUrl({ id }), {
+                method: 'delete'
+            });
+            console.log(await res.json());
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     const tableRow = (obj) => {
@@ -69,9 +68,9 @@ export default function MyTable() {
 
     // ComponentDidMount - fetch
     // ComponentDidUpdate
-    // useEffect(() => {
-       // fetchTable();
-    // }, [data]);
+    useEffect(() => {
+       fetchTable();
+    }, [data]);
       //só atualiza se o state mudar  ex: [data] --> (prevState !== state)? setData : continue
 
     return (

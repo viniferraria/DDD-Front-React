@@ -16,27 +16,30 @@ it("receives and renders user data correctly", () => {
         "specie": "Lion"
     }
         
+    const url = `/details/${mockedObj.id}`
+
     const mockLocation = {
-        pathname: '/details/1',
+        pathname: url,
         hash: '',
         search: '',
         state: mockedObj
     }
-        
-    jest.spyOn(routeData, 'useHistory').mockReturnValue(mockedObj.id);
-    
 
-    const { getByPlaceholderText, getByDisplayValue, debug } = render(
-        <MemoryRouter initialEntries={[`/details/${mockedObj.id}`]}>
+    jest.spyOn(routeData, 'useParams').mockReturnValue({id: mockedObj.id});
+
+    const { getByPlaceholderText, getByText, debug } = render(
+        <MemoryRouter initialEntries={[url]}>
             <Details location={mockLocation}/>
         </MemoryRouter>
     );
 
+    
+    const editButton = getByText("Edit");
     const name = getByPlaceholderText(/Name/i);
     const specie = getByPlaceholderText(/Specie/i);
-
+    
     // assert
-
+    expect(editButton.href).toBe(`http://localhost/edit/${mockedObj.id}/`);
     expect(name.value).toBe(mockedObj.name);
     expect(specie.value).toBe(mockedObj.specie);
 });

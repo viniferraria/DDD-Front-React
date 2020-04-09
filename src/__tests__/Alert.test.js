@@ -17,9 +17,10 @@ it("renders success alert", () => {
   const alert = queryByRole("alert");
 
   // assert
-  expect(alert).toBeTruthy();
+  expect(alert.className).toBe("alert alert-success fade");
 
 });
+
 
 it("renders error alert", () => {
 
@@ -34,6 +35,6 @@ it("renders error alert", () => {
   const alert = queryByRole("alert");
 
   // assert
-  expect(alert).toBeTruthy();
+  expect(alert.className).toBe("alert alert-danger fade");
 
 });
