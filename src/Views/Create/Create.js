@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import Flag from '../Alert/Flag';
 import { Zoo } from '../../Models/Zoo';
+import { createUrl } from "../../constants";
 
 export default function Create() {
     // Hooks
@@ -12,7 +13,7 @@ export default function Create() {
 
     const createZoo = async(animal) => {
         try {
-            await fetch("https://localhost:44318/zoo/add", {
+            await fetch(createUrl, {
                 method: "post",
                 headers: new Headers({'Content-Type': 'application/json'}),
                 body: JSON.stringify(animal)

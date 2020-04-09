@@ -1,8 +1,8 @@
 import React from 'react';
-import { fireEvent, render, queryByDisplayValue} from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import Flag from "../Views/Alert/Flag";
-import { Alert } from 'reactstrap';
 
+afterEach(cleanup);
 
 it("renders success alert", () => {
 
@@ -10,13 +10,16 @@ it("renders success alert", () => {
   const fakeSuccess = {success: true, message: 'Success'};
 
   // act
-  const { queryAllByText } = render(
+  const { queryByRole } = render(
     <Flag message={fakeSuccess.message} success={fakeSuccess.success} />
   );
-  console.log(queryAllByText(fakeSuccess.message).textContext);
+
+  const alert = queryByRole("alert");
+  console.log(alert.value);
+  debug();
 
   // assert
-  expect(queryAllByText(fakeSuccess.message)).toBeTruthy();
+  expect(alert.value).toBe(fakeSuccess.message);
 
 });
 
@@ -26,12 +29,14 @@ it("renders error alert", () => {
   const fakeError = {success: false, message: 'Error'};
 
   // act
-  const { queryAllByText } = render(
+  const { queryByRole, debug } = render(
     <Flag message={fakeError.message} success={fakeError.success} />
   );
-  console.log(queryAllByText(fakeError.message).textContext);
+
+  const alert = queryByRole("alert");
+  console.log(alert.value);
 
   // assert
-  expect(queryAllByText(fakeError.message)).toBeTruthy();
+  expect(alert.value).toBe(fakeError.message);
 
 });
