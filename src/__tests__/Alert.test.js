@@ -1,22 +1,8 @@
-import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
+import React from 'react';
+import { render, cleanup } from '@testing-library/react';
 import Flag from "../Views/Alert/Flag";
 
-let container = null;
-beforeEach(() => {
-  // configurar o elemento do DOM como o alvo da renderização
-  container = document.createElement("div");
-  document.body.appendChild(container);
-  container = document.createElement("div");
-});
-
-afterEach(() => {
-  // limpar na saída
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
+afterEach(cleanup);
 
 it("renders success alert", () => {
 
@@ -24,13 +10,17 @@ it("renders success alert", () => {
   const fakeSuccess = {success: true, message: 'Success'};
 
   // act
-  act(() => {
-    render(<Flag success={fakeSuccess.success} message={fakeSuccess.message}/>, container);
-  });
+  const { queryByRole, debug } = render(
+    <Flag message={fakeSuccess.message} success={fakeSuccess.success} />
+  );
+
+  const alert = queryByRole("alert");
+
   // assert
-  expect(container.textContext).toBe(fakeSuccess.message);
+  expect(alert.className).toBe("alert alert-success fade");
 
 });
+
 
 it("renders error alert", () => {
 
@@ -38,10 +28,13 @@ it("renders error alert", () => {
   const fakeError = {success: false, message: 'Error'};
 
   // act
-  act(() => {
-    render(<Flag success={fakeError.success} message={fakeError.message} />, container);
-  });
+  const { queryByRole, debug } = render(
+    <Flag message={fakeError.message} success={fakeError.success} />
+  );
+
+  const alert = queryByRole("alert");
+
   // assert
-  expect(container.textContext).toBe(fakeError.message);
+  expect(alert.className).toBe("alert alert-danger fade");
 
 });

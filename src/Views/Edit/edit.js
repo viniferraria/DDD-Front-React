@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import { Zoo } from '../../Models/Zoo';
 import Flag from '../Alert/Flag';
+import { editUrl } from '../../constants';
 
 export default function Edit(props) {
     const [name, setName] = useState(props.location.state.name);
@@ -12,7 +13,7 @@ export default function Edit(props) {
     
     const editZoo = async(animal) => {
         try {
-            await fetch(`https://localhost:44318/zoo/update/${animal.id}`, {
+            await fetch(editUrl(animal), {
                 method: "put",
                 headers: new Headers({ 'Content-Type': 'application/json' }),
                 body: JSON.stringify(animal)
@@ -46,11 +47,11 @@ export default function Edit(props) {
                 <fieldset>
                     <label>
                         Name:
-                        <input type='text' id='name' name='name' placeholder={'Name'} value={name} onChange={(e) => setName(e.target.value)} />
+                        <input type='text' id='name' name='name' placeholder='name' value={name} onChange={(e) => setName(e.target.value)} />
                     </label>
                     <label>
                         Specie:
-                        <input type='text' id='specie' name='specie' placeholder={'Specie'} value={specie} onChange={(e) => setSpecie(e.target.value)} />
+                        <input type='text' id='specie' name='specie' placeholder='specie' value={specie} onChange={(e) => setSpecie(e.target.value)} />
                     </label>
                     <Button type="submit">Save</Button>
                 </fieldset>

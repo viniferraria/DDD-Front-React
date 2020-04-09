@@ -1,28 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from'reactstrap';
-import { Route, Link } from 'react-router-dom';
-import Details from '../Details/details';
-import Edit from '../Edit/edit';
+import { Link } from 'react-router-dom';
+import { fetchTableUrl, bulkUrl} from '../../constants';
+import { deleteById } from './tableApi';
 import './Table.css';
 
 
 export default function MyTable() {
     const [data, setData] = useState([]);
 
-    const deleteById = async ({ id }) => {
-        try {
-            const res = await fetch(`https://localhost:44318/zoo/${id}`, {
-                method: 'delete'
-            });
-            console.log(await res.json());
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
     const tableRow = (obj) => {
         return <tr key={`row-${obj.id}`}>
-            <th scope="row" data-testid={obj.id.toString()} key={obj.id.toString()}>{obj.id}</th>
+            <th scope="row" data-testid={`${obj.id}`} key={`${obj.id}`}>{obj.id}</th>
             <td data-testid={obj.name} key={obj.name}>{obj.name}</td>
             <td data-testid={obj.specie} key={obj.specie}>{obj.specie}</td>
             <Button data-testid={`${obj.id}-details-btn`} key={`${obj.id}-details-btn`}
@@ -41,16 +30,15 @@ export default function MyTable() {
     }
 
     const bulkInsert = () => {
-        fetch("https://localhost:44318/zoo/read")
+        fetch(bulkUrl)
         .then((res) => res.json())
         .then(console.log('fetched'))
         .catch(e => console.log(e));
     }
-   
 
     async function fetchTable() {
         try {
-            const res = await fetch("https://localhost:44318/zoo",{ method: 'get'});
+            const res = await fetch(fetchTableUrl,{ method: 'get'});
             setData(await res.json());
         } catch (err) {
             console.log(err);
@@ -59,9 +47,9 @@ export default function MyTable() {
 
     // ComponentDidMount - fetch
     // ComponentDidUpdate
-      useEffect(() => {
-        fetchTable();
-      }, [data]);
+    useEffect(() => {
+       fetchTable();
+    }, [data]);
       //só atualiza se o state mudar  ex: [data] --> (prevState !== state)? setData : continue
 
     return (
@@ -81,8 +69,6 @@ export default function MyTable() {
                     {data && data.map(obj => tableRow(obj))}
                 </tbody>
             </Table>
-            <Route path={`/details/:id`} component={Details} />
-            <Route path={`/edit/:id`} component={Edit} />
         </div>
     )
 }

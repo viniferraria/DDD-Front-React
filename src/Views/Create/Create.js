@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import Flag from '../Alert/Flag';
 import { Zoo } from '../../Models/Zoo';
+import { createUrl } from "../../constants";
 
 export default function Create() {
     // Hooks
@@ -12,7 +13,7 @@ export default function Create() {
 
     const createZoo = async(animal) => {
         try {
-            await fetch("https://localhost:44318/zoo/add", {
+            await fetch(createUrl, {
                 method: "post",
                 headers: new Headers({'Content-Type': 'application/json'}),
                 body: JSON.stringify(animal)
@@ -46,11 +47,11 @@ export default function Create() {
                 <fieldset>
                     <label>
                         Name:
-                        <input type='text' id='name' name='name' placeholder={'Name'} value={name} onChange={ e => setName(e.target.value)} />
+                        <input data-testid={"name-input"} type='text' id='name-input' name='name' placeholder={'Name'} value={name} onChange={ e => setName(e.target.value)} />
                     </label>
                     <label>
                         Specie:
-                        <input type='text' id='specie' name='specie' placeholder={'Specie'} value={specie} onChange={ e => setSpecie(e.target.value)} />
+                        <input data-testid="specie-input" type='text' id='specie' name='specie' placeholder={'Specie'} value={specie} onChange={ e => setSpecie(e.target.value)} />
                     </label>
                     <Button type="submit">Submit</Button>
                 </fieldset>
@@ -58,3 +59,14 @@ export default function Create() {
         </div>
     )
 }
+
+
+// import React from 'react';
+// import { render } from '@testing-library/react';
+// import Experiment from '../Experiment';
+
+// test('renders learn react link', () => {
+//   const { getByText } = render(<Experiment />);
+//   const linkElement = getByText(/Hey, stranger/i);
+//   expect(linkElement).toBeInTheDocument();
+// });

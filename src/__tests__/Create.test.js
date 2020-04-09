@@ -1,56 +1,84 @@
-// import React from "react";
-// import { render, unmountComponentAtNode } from "react-dom";
-// import { act } from "react-dom/test-utils";
-// import Table from "../Views/Table/Table";
-// import { BrowserRouter as Router, Link } from 'react-router-dom';
+import React from 'react';
+import { render, fireEvent, cleanup } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom';
+import Create from "../Views/Create/Create";
 
-// let container = null;
-// beforeEach(() => {
-//   // configurar o elemento do DOM como o alvo da renderização
-//   container = document.createElement("div");
-//   document.body.appendChild(container);
-//   container = document.createElement("div");
-//   // container *deve* ser anexado ao documento para que os eventos ocorram corretamente.
-//   document.body.appendChild(container);
-// });
 
-// afterEach(() => {
-//   // limpar na saída
-//   unmountComponentAtNode(container);
-//   container.remove();
-//   container = null;
-// });
+afterEach(cleanup);
 
-// it("renders user data and correct href for buttons", async () => {
+// describe("Test inputs states", )
+test('It should receive a name', () => {
+  //arrange
+  const mockedInput = { 
+    name: "Simba",
+    specie: "Lion"
+  }
 
-//   // arrange
-//   const fakeList = [
-//     {
-//         "id": 1,
-//         "name": "Simba",
-//         "specie": "Lion"
-//     },
-//     {
-//         "id": 2,
-//         "name": "Mufasa",
-//         "specie": "Lion"
-//     }
-//   ]
+  //act 
+    const { getByTestId, debug } = render(
+      <MemoryRouter initialEntries={['/add']}>
+          <Create />
+      </MemoryRouter>
+    );
 
-//   jest.spyOn(global, "fetch").mockImplementation(() =>
-//     Promise.resolve({
-//       json: () => Promise.resolve(fakeList)
-//     })
-//   );
-  
+    const name = getByTestId("name-input");
+    const specie = getByTestId("specie-input");
+    fireEvent.change(name, { target: { value: mockedInput.name } });
+    
+    //assert
+    expect(name.value).toBe(mockedInput.name);
+    expect(specie.value).toBe('');
+  });
 
-//   // act
-//   // Usar a versão assíncrona de act para aplicar Promises resolvidas
-//   await act(async () => {
-//     render(
-//     <Router>
-//       <Table />
-//     </Router>, container);
-//   });
 
-// });
+
+test('It should update specie', () => {
+  //arrange
+  const mockedInput = { 
+    name: "Simba",
+    specie: "Lion"
+  }
+
+  //act 
+    const { getByTestId, debug } = render(
+      <MemoryRouter initialEntries={['/add']}>
+          <Create />
+      </MemoryRouter>
+    );
+
+    const name = getByTestId("name-input");
+    const specie = getByTestId("specie-input");
+    fireEvent.change(specie, { target: { value: mockedInput.specie } });
+    
+    //assert
+    expect(name.value).toBe('');
+    expect(specie.value).toBe(mockedInput.specie);
+});
+
+
+test('It should receive a specie', () => {
+  //arrange
+  const mockedInput = { 
+    name: "Simba",
+    specie: "Lion"
+  }
+
+  //act 
+    const { getByTestId, debug } = render(
+      <MemoryRouter initialEntries={['/add']}>
+          <Create />
+      </MemoryRouter>
+    );
+
+    // select html elements
+    const name = getByTestId("name-input");
+    const specie = getByTestId("specie-input");
+
+    // updating values
+    fireEvent.change(name, { target: { value: mockedInput.name } });
+    fireEvent.change(specie, { target: { value: mockedInput.specie } });
+    
+    //assert
+    expect(name.value).toBe(mockedInput.name);
+    expect(specie.value).toBe(mockedInput.specie);
+});

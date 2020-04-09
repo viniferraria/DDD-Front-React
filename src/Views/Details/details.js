@@ -1,13 +1,14 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 
 export default function Details(props) {
+    let history = useHistory();
     let { id } = useParams();
 
     return (
         <div>
-            <Button tag={Link} to={"/"}> Back </Button>
+            <Button onClick={() => history.push("/")}> Back </Button>
             <Button 
                 tag={Link} to={{
                     pathname: `/edit/${id}/`,
@@ -18,11 +19,11 @@ export default function Details(props) {
                 <fieldset disabled>
                     <label>
                         Name:
-                        <input data-testid={`details-name`} type='text' id='name' name='name' value={props.location.state.name || props.name}/>
+                        <input readOnly data-testid={`details-name`} type='text' id='name' name='name' placeholder="Name" value={props.location.state.name || props.name}/>
                     </label>
                     <label>
                         Specie:
-                        <input data-testid={`details-specie`} type='text' id='specie' name='specie'value={props.location.state.specie || props.specie}/>
+                        <input readOnly data-testid={`details-specie`} type='text' id='specie' name='specie' placeholder="Specie" value={props.location.state.specie || props.specie}/>
                     </label>
                 </fieldset>
             </form>
