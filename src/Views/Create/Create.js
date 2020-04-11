@@ -20,7 +20,7 @@ export default function Create() {
             });
             // const json = await res.json();
             setAlert({show: true, success: true, message: `Animal Created`})
-  //          setTimeout(() => setAlert({show: false}), 3000);
+            setTimeout(() => setAlert({show: false}), 3000);
             setName('');
             setSpecie('');
         } catch(err) {
@@ -53,7 +53,10 @@ export default function Create() {
                         Specie:
                         <input data-testid="specie-input" type='text' id='specie' name='specie' placeholder={'Specie'} value={specie} onChange={ e => setSpecie(e.target.value)} />
                     </label>
-                    <Button type="submit">Submit</Button>
+                    { (name.length >= 1 && specie.length >= 1)? 
+                        <Button type="submit">Submit</Button> :  
+                        <Button disabled type="submit">Submit</Button>
+                    }
                 </fieldset>
             </form>
         </div>

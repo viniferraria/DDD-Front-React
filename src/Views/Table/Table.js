@@ -12,8 +12,8 @@ export default function MyTable() {
     const tableRow = (obj) => {
         return <tr key={`row-${obj.id}`}>
             <th scope="row" data-testid={`${obj.id}`} key={`${obj.id}`}>{obj.id}</th>
-            <td data-testid={obj.name} key={obj.name}>{obj.name}</td>
-            <td data-testid={obj.specie} key={obj.specie}>{obj.specie}</td>
+            <td data-testid={`name-${obj.id}`} key={`name-${obj.id}`}>{obj.name}</td>
+            <td data-testid={`specie-${obj.id}`} key={`specie-${obj.id}`}>{obj.specie}</td>
             <Button data-testid={`${obj.id}-details-btn`} key={`${obj.id}-details-btn`}
                 tag={Link} to={{
                     pathname:`/details/${obj.id}/`,
