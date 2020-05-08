@@ -1,5 +1,5 @@
-let port = 5001;
-let baseUrl = `https://localhost:${port}/zoo`;
+// let port = 5001;
+let baseUrl = `https://animalback.azurewebsites.net/zoo`;
 
 module.exports = {
     bulkUrl: `${baseUrl}/read`,
