@@ -60,7 +60,7 @@ it("renders user data and correct href for buttons", async () => {
     /* Specie assert */
     expect(container.querySelector(`[data-testid="specie-${id}"]`).textContent).toBe(specie);
     /* Details button href assert */
-    expect(container.querySelector(`[data-testid="${id}-details-btn"]`).getAttribute("href")).toEqual(`/details/${id}/`);
+    // expect(container.querySelector(`[data-testid="${id}-details-btn"]`).getAttribute("href")).toEqual(`/details/${id}/`);
     /* Edit button href assert */
     expect(container.querySelector(`[data-testid="${id}-edit-btn"]`).getAttribute("href")).toEqual(`/edit/${id}/`);
     

@@ -8,7 +8,6 @@ export default function Details(props) {
 
     return (
         <div>
-            <Button onClick={() => history.push("/")}> Back </Button>
             <Button 
                 tag={Link} to={{
                     pathname: `/edit/${id}/`,

@@ -60,14 +60,14 @@ test('It should update only the name', () => {
     };
 
     jest.spyOn(routeData, 'useHistory').mockReturnValue(mockedInput.id);
-  
+
     //act 
     const { getByPlaceholderText, getByDisplayValue, debug } = render(
         <MemoryRouter initialEntries={[url]}>
             <Edit location={mockLocation}/>
         </MemoryRouter>
     );
-       
+
     // select html element
     const name = getByDisplayValue(mockedInput.name);
     const specie = getByDisplayValue(mockedInput.specie);
@@ -98,7 +98,7 @@ test('It should update only the specie', () => {
     };
 
     jest.spyOn(routeData, 'useHistory').mockReturnValue(mockedInput.id);
-  
+
     //act 
     const { getByPlaceholderText, getByDisplayValue, debug } = render(
         <MemoryRouter initialEntries={[url]}>
